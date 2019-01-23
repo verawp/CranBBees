@@ -1,0 +1,52 @@
+---
+title: "Landscape influence on bumble bee colony density in Wisconsin cranberry marshes"
+author: "Vera Pfeiffer"
+date: "January 22, 2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Abstract
+
+#Context
+Native pollinators provide an important ecosystem service for many pollination-dependent fruit crops, but require nesting and foraging resources in proximity to target crop plants. Pollination services provided by wild bees may fluctuate temporally due to shifts in foraging behavior and floral resource distribution throughout the season. 
+#Objectives
+This study investigates how landscape context influences bumble bee density on cranberry marshes across a resource pulse created by the target crop bloom.
+#Methods
+We sampled bumble bees at fourteen cranberry marshes before, during, and after the cranberry bloom in central Wisconsin.  We quantified floral richness and surrounding land cover and assessed their effects on bumble bee density and colony representation using linear regression.
+#Results
+The amount of forest surrounding marshes explained the most variation in individual and colony density. The interspersion of meadow in the surrounding landscape and the total bog edge were also useful to explain positive covariation in bumble bee colony density in top multiple variate regression models, while floral richness on site was a useful second factor to explain increased forager density. Overall, colony density and detection did not change between the pre- and post-bloom period and resource pulse, after statistically controlling for important landscape scale effects. Yet, in the multiple variate regression models for relative change in colony density, increased meadow interspersion and decreased open-shrub bog explained some increase in colony density during the resource pulse. While sites with high meadow interspersion in the surrounding landscape had lower colony representation (i.e., detection rate), suggesting some dilution effect, landscapes with more surrounding meadow and less clumpy forest experienced increased colony representation by foragers during the crop bloom.
+#Conclusions
+We suggest maintaining forest in the surrounding landscape to promote local bumble bee colony density and increasing floral richness on site to attract foraging bees. While colonies may be somewhat diluted by surrounding interspersed meadow, marshes located in landscapes with more surrounding meadow experienced a greater increase in detection probabilities of colonies during the resource pulse, corroborating our observation that cranberry floral resources are attractive to bumble bees.
+
+#Keywords
+Bombus, resource pulse, mass-flowering, floral resources, landscape genetics, microsatellites
+
+## Cranberry landscape summary 
+
+```{r}
+read.csv()
+```
+
+## Bumble bee colony density calculations
+
+You can also embed plots, for example:
+
+```{r}
+plot(pressure)
+```
+
+## Cranberry landscapes and bumble bee density stats
+
+You can also embed plots, for example:
+
+```{r}
+plot(pressure)
+```
+
+## Conclusions
+
+This study provides further evidence that the landscape context dramatically influences the density of bumble bee colonies as well as fluctuation in foraging patterns throughout the pre- and post-bloom periods. Developing the contextual understanding of bumble bee foraging behavior depending on landscape content and configuration is important to predict and enhance the resources available to wild populations and even to improve the benefits derived from their ecosystem services. As wild pollinators are known to contribute uniquely and persistently to fruit yield, harnessing the mechanisms that promote these gains can improve the efficiency and production of farms. Native bee contribution is estimated to influence the yield of most fruit and nut crops that account for 35% of food production around the world, and demand for these crops is on the rise (Klein et al. 2007; Aizen and Harder 2009). We conclude that ecological intensification through conservation and restoration of interspersed forest and floral resources could promote native bumble bee populations and relieve dependence on managed honey bees to some degree. 
