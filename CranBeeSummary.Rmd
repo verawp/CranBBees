@@ -47,6 +47,67 @@ You can also embed plots, for example:
 plot(pressure)
 ```
 
+## Check top models for multicollinearity and spatial autocorrelation
+
+We checked multicollinearity of top models and 
+
+
+# Load packages
+```{r}
+library(sp)
+library(spdep)
+```
+
+# Get spatial data and make spatial subsets for models with different sample size
+```{r}
+spatdata<-read.csv("MarshXY.csv")
+
+spatdatax<-spatdata[-3,]
+spatdata2<-spatdata[-c(7:8),]
+spatdata2<-spatdata2[-c(3:4),]
+
+spdat <- SpatialPointsDataFrame(cbind(spatdata$x, spatdata$y), spatdata)
+spdatx <- SpatialPointsDataFrame(cbind(spatdatax$x, spatdatax$y), spatdatax)
+spdat2 <- SpatialPointsDataFrame(cbind(spatdata2$x, spatdata2$y), spatdata2)
+```
+
+# Weights matrix with the 10 nearest neighbors, in weights list form 
+```{r}
+lstw  <- nb2listw(knn2nb(knearneigh(spdat, k = 10)))
+lstwx  <- nb2listw(knn2nb(knearneigh(spdatx, k = 10)))
+lstw2  <- nb2listw(knn2nb(knearneigh(spdat2, k = 8)))
+```
+
+## Create models
+
+```{r}
+mod1<-lm(PPind~sFor_Prop+sHyd_TE+slgFlwR, na.action= "na.fail", data = stancran)
+mod2<-lm(FSind~sFor_Prop+sFor_Clumpy+slgFlwR, na.action= "na.fail", data = stancran)
+mod3<-lm(MBind~sFor_Prop+slgFlwR, na.action= "na.fail", data = stancran)
+mod4<-lm(sRelChangeInd ~ slgFlwR, na.action= "na.fail", data = stancran2)
+mod5<-lm(sFS_TotT ~ sFor_Prop + sHyd_TE + sMdw_IJI, na.action= "na.fail", data = stancran)
+mod6<-lm(sPP_TotT~sFor_Prop + sHyd_TE + slgFlwR, na.action= "na.fail", data = stancran)
+mod7<-lm(sM_TotT ~ sFor_Prop + sMdw_Prop, na.action= "na.fail", data = stancran2)
+mod8<-lm(sChangePPM ~ sHyd_Prop + slgFlwR, na.action= "na.fail", data = stancran2)
+mod9<-lm(sAvgDet ~ sMdw_IJI, na.action= "na.fail", data = stancran)
+mod10<-lm(sChangeDet ~ sFor_Clumpy, na.action= "na.fail", data = stancran2)
+```
+
+# Moran's test using the residuals of the model
+
+```{r}
+moran.test(resid(mod1), lstw) 
+moran.test(resid(mod2), lstw)
+moran.test(resid(mod3), lstw)
+moran.test(resid(mod4), lstwx)
+moran.test(resid(mod5), lstw)
+moran.test(resid(mod6), lstw)
+moran.test(resid(mod7), lstw2)
+moran.test(resid(mod8), lstw2)
+moran.test(resid(mod9), lstw2)
+moran.test(resid(mod10), lstw2)
+```
+
 ## Conclusions
 
 This study provides further evidence that the landscape context dramatically influences the density of bumble bee colonies as well as fluctuation in foraging patterns throughout the pre- and post-bloom periods. Developing the contextual understanding of bumble bee foraging behavior depending on landscape content and configuration is important to predict and enhance the resources available to wild populations and even to improve the benefits derived from their ecosystem services. As wild pollinators are known to contribute uniquely and persistently to fruit yield, harnessing the mechanisms that promote these gains can improve the efficiency and production of farms. Native bee contribution is estimated to influence the yield of most fruit and nut crops that account for 35% of food production around the world, and demand for these crops is on the rise (Klein et al. 2007; Aizen and Harder 2009). We conclude that ecological intensification through conservation and restoration of interspersed forest and floral resources could promote native bumble bee populations and relieve dependence on managed honey bees to some degree. 
