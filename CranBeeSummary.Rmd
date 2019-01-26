@@ -31,13 +31,116 @@ Bombus, resource pulse, mass-flowering, floral resources, landscape genetics, mi
 read.csv()
 ```
 
-## Bumble bee colony density calculations
+## Bumble bee colony density calculations using genetic mark recapture
 
-You can also embed plots, for example:
+We used microsatellite DNA to genotype individual bumble bees and assign colony membership.  Using the distribution of individual bumble bees across colonies observed, we used the genetic-mark recapture statistical approach to estimate the total number of bumble bee colonies present at sites.
+
+# Test for HW equilibrium and Null Alleles 
+```{r}
+library(pegas)
+library(devtools)
+library(stringr)
+library(adegenet)
+library(Rcapture)
+library(plyr)
+library(capwire)
+library(ggplot2)
+```
 
 ```{r}
-plot(pressure)
+
+
+colnames(alle)<-c("Ind","mk1_1","mk1_2","mk2_1","mk2_2","mk3_1","mk3_2","mk4_1","mk4_2","mk5_1","mk5_2","mk6_1","mk6_2","mk7_1","mk7_2","mk8_1","mk8_2","mk9_1","mk9_2","mk10_1","mk10_2","mk11_1","mk11_2","mk12_1","mk12_2","mk13_1","mk13_2")
+rownames(alle)<-c(alle[,1])
+colnames(alle)<-c("1.1","1.2","2.1","2.2","3.1","3.2","4.1","4.2","5.1","5.2","6.1","6.2","7.1","7.2","8.1","8.2","9.1","9.2","10.1","10.2","11.1","11.2","12.1","12.2","13.1","13.2")
+
+alle$mk1_1[alle$mk1_1==0]<-NA
+alle$mk1_2[alle$mk1_2==0]<-NA
+alle$mk2_1[alle$m2_1==0]<-NA
+alle$mk2_2[alle$mk2_2==0]<-NA
+alle$mk3_1[alle$mk3_1==0]<-NA
+alle$mk3_2[alle$mk3_2==0]<-NA
+alle$mk4_1[alle$mk4_1==0]<-NA
+alle$mk4_2[alle$mk4_2==0]<-NA
+alle$mk5_1[alle$mk5_1==0]<-NA
+alle$mk5_2[alle$mk5_2==0]<-NA
+alle$mk6_1[alle$mk6_1==0]<-NA
+alle$mk6_2[alle$mk6_2==0]<-NA
+alle$mk7_1[alle$mk7_1==0]<-NA
+alle$mk7_2[alle$mk7_2==0]<-NA
+alle$mk8_1[alle$mk8_1==0]<-NA
+alle$mk8_2[alle$mk8_2==0]<-NA
+alle$mk9_1[alle$mk9_1==0]<-NA
+alle$mk9_2[alle$mk9_2==0]<-NA
+alle$mk10_1[alle$mk10_1==0]<-NA
+alle$mk10_2[alle$mk10_2==0]<-NA
+alle$mk11_1[alle$mk11_1==0]<-NA
+alle$mk11_2[alle$mk11_2==0]<-NA
+alle$mk12_1[alle$mk12_1==0]<-NA
+alle$mk12_2[alle$mk12_2==0]<-NA
+alle$mk13_1[alle$mk13_1==0]<-NA
+alle$mk13_2[alle$mk13_2==0]<-NA
+
+
+alle$loc1 <- paste(alle$mk1_1, alle$mk1_2, sep="-")
+alle$loc2 <- paste(alle$mk2_1, alle$mk2_2, sep="-")
+alle$loc3 <- paste(alle$mk3_1, alle$mk3_2, sep="-")
+alle$loc4 <- paste(alle$mk4_1, alle$mk4_2, sep="-")
+alle$loc5 <- paste(alle$mk5_1, alle$mk5_2, sep="-")
+alle$loc6 <- paste(alle$mk6_1, alle$mk6_2, sep="-")
+alle$loc7 <- paste(alle$mk7_1, alle$mk7_2, sep="-")
+alle$loc8 <- paste(alle$mk8_1, alle$mk8_2, sep="-")
+alle$loc9 <- paste(alle$mk9_1, alle$mk9_2, sep="-")
+alle$loc10 <- paste(alle$mk10_1, alle$mk10_2, sep="-")
+alle$loc11 <- paste(alle$mk11_1, alle$mk11_2, sep="-")
+alle$loc12 <- paste(alle$mk12_1, alle$mk12_2, sep="-")
+alle$loc13 <- paste(alle$mk13_1, alle$mk13_2, sep="-")
+
+alle1<-alle[,2:27]
+rownames(alle1)<-c(alle$Ind)
+alle2<-alle[,28:40]
+
+
+alleC<-cbind(alle$Ind,alle2)
+
+obj<-df2genind(alleC, ploidy=2,type="codom",sep="-")
+
+null.all(obj) #adegenet
+
+obj.hwt <- hw.test(obj, B=0) #pegas
 ```
+
+
+After testing hardy-weinberg equilibrium and for null alleles
+
+```{r}
+library(Rcapture)
+library(plyr)
+library(capwire)
+library(ggplot2)
+```
+
+
+
+```{r}
+A73_ColperSite = ddply(BB_A73, c("Period","MotherID"), nrow)
+names(A73_ColperSite)<-c("Period","Mother","NoBees")
+A73_CtperSite = ddply(A73_ColperSite, c("Period","NoBees"), nrow)
+
+A73_B<-A73_CtperSite[1,2:3]
+A73_P<-A73_CtperSite[2:3,2:3]
+
+A73_B_Ecm<-fitEcm(data=A73_B,max.pop=500)
+A73_B_Tirm<-fitTirm(data=A73_B,max.pop=500)
+
+A73_P_Ecm<-fitEcm(data=A73_P,max.pop=500)
+A73_P_Tirm<-fitTirm(data=A73_P,max.pop=500)
+
+A73_P_test<-lrtCapwire(A73_P_Ecm, A73_P_Tirm, bootstraps = 100)
+
+A73_P_Ecm<-bootstrapCapwire(x=A73_P_Ecm, bootstraps=1000,CI=c(0.025,0.975))
+```
+
 
 ## Cranberry landscapes and bumble bee density stats
 
