@@ -144,10 +144,10 @@ A73_P_Ecm<-bootstrapCapwire(x=A73_P_Ecm, bootstraps=1000,CI=c(0.025,0.975))
 
 ## Cranberry landscapes and bumble bee density stats
 
-You can also embed plots, for example:
+We used OLS regression to contrast the explanatory capacity of the selected landscape structure variables and floral richness.
 
 ```{r}
-plot(pressure)
+
 ```
 
 ## Check top models for multicollinearity and spatial autocorrelation
