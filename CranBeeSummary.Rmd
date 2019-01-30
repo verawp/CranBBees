@@ -147,7 +147,138 @@ A73_P_Ecm<-bootstrapCapwire(x=A73_P_Ecm, bootstraps=1000,CI=c(0.025,0.975))
 We used OLS regression to contrast the explanatory capacity of the selected landscape structure variables and floral richness.
 
 ```{r}
+library(ggplot2)
+library(gridExtra)
+```
 
+```{r}
+Exp<-cbind(stancran$sAg_Prop,stancran$sAg_MPS,stancran$sFor_Prop,stancran$sFor_Clumpy,stancran$sMdw_Prop,stancran$sMdw_IJI,stancran$sHyd_Prop,stancran$sHyd_TE,stancran$sL_SD,stancran$sL_Con,stancran$FlwR)
+
+FS_C<-hier.part(stancran$sFS_TotT, data.frame(Exp), gof="Rsqu")
+FS_C2<-cbind(FS_C$IJ,c("Ag","AgP","For","ForC","Mdw","MdwI","Hyd","HydE","LaD","LaC","FlwR"))
+names(FS_C2)<-c("Ind","Joint","Total","Var")
+
+p<-ggplot(data = FS_C2, aes(x=Var, y=Total)) +
+  geom_bar(stat="identity", fill="black") +
+  theme_minimal()
+p1<-p + scale_x_discrete(limits=c("Ag","AgP","For","ForC","Mdw","MdwI","Hyd","HydE","LaD","LaC","FlwR"))
+
+
+PP_C<-hier.part(stancran$sPP_TotT, data.frame(Exp), gof="Rsqu")
+PP_C2<-cbind(PP_C$IJ,c("Ag","AgP","For","ForC","Mdw","MdwI","Hyd","HydE","LaD","LaC","FlwR"))
+names(PP_C2)<-c("Ind","Joint","Total","Var")
+
+p<-ggplot(data = PP_C2, aes(x=Var, y=Total)) +
+  geom_bar(stat="identity", fill="black") +
+  theme_minimal()
+p2<-p + scale_x_discrete(limits=c("Ag","AgP","For","ForC","Mdw","MdwI","Hyd","HydE","LaD","LaC","FlwR"))
+
+
+Exp2<-cbind(stancran2$sAg_Prop,stancran2$sAg_MPS,stancran2$sFor_Prop,stancran2$sFor_Clumpy,stancran2$sMdw_Prop,stancran2$sMdw_IJI,stancran2$sHyd_Prop,stancran2$sHyd_TE,stancran2$sL_SD,stancran2$sL_Con,stancran2$slgFlwR)
+
+
+B_C<-hier.part(stancran2$sM_TotT, data.frame(Exp2), gof="Rsqu")
+B_C2<-cbind(B_C$IJ,c("Ag","AgP","For","ForC","Mdw","MdwI","Hyd","HydE","LaD","LaC","FlwR"))
+names(B_C2)<-c("Ind","Joint","Total","Var")
+
+p<-ggplot(data = B_C2, aes(x=Var, y=Total)) +
+  geom_bar(stat="identity", fill="black") +
+  theme_minimal()
+p3<-p + scale_x_discrete(limits=c("Ag","AgP","For","ForC","Mdw","MdwI","Hyd","HydE","LaD","LaC","FlwR"))
+
+
+AvD<-hier.part(stancran2$AvgDet, data.frame(Exp2), gof="Rsqu")
+AvD2<-cbind(AvD$IJ,c("Ag","AgP","For","ForC","Mdw","MdwI","Hyd","HydE","LaD","LaC","FlwR"))
+names(AvD2)<-c("Ind","Joint","Total","Var")
+
+p<-ggplot(data = AvD2, aes(x=Var, y=Total)) +
+  geom_bar(stat="identity", fill="black") +
+  theme_minimal()
+p4<-p + scale_x_discrete(limits=c("Ag","AgP","For","ForC","Mdw","MdwI","Hyd","HydE","LaD","LaC","FlwR"))
+
+grid.arrange(p1, p2, p3, p4, nrow = 4)
+```
+
+
+#Individuals
+
+```{r}
+# Full season
+FS_I<-hier.part(stancran$sFSind, data.frame(Exp), gof="Rsqu")
+FS_I2<-cbind(FS_I$IJ,c("Ag","AgP","For","ForC","Mdw","MdwI","Hyd","HydE","LaD","LaC","FlwR"))
+names(FS_I2)<-c("Ind","Joint","Total","Var")
+
+p<-ggplot(data = FS_I2, aes(x=Var, y=Total)) +
+  geom_bar(stat="identity", fill="black") +
+  theme_minimal()
+p5<-p + scale_x_discrete(limits=c("Ag","AgP","For","ForC","Mdw","MdwI","Hyd","HydE","LaD","LaC","FlwR"))
+
+
+
+PP_I<-hier.part(stancran$sPPind, data.frame(Exp), gof="Rsqu")
+PP_I2<-cbind(PP_I$IJ,c("Ag","AgP","For","ForC","Mdw","MdwI","Hyd","HydE","LaD","LaC","FlwR"))
+names(PP_I2)<-c("Ind","Joint","Total","Var")
+
+p<-ggplot(data = PP_I2, aes(x=Var, y=Total)) +
+  geom_bar(stat="identity", fill="black") +
+  theme_minimal()
+p6<-p + scale_x_discrete(limits=c("Ag","AgP","For","ForC","Mdw","MdwI","Hyd","HydE","LaD","LaC","FlwR"))
+
+
+
+MB_I<-hier.part(stancran$sMBind, data.frame(Exp), gof="Rsqu")
+MB_I2<-cbind(MB_I$IJ,c("Ag","AgP","For","ForC","Mdw","MdwI","Hyd","HydE","LaD","LaC","FlwR"))
+names(MB_I2)<-c("Ind","Joint","Total","Var")
+
+p<-ggplot(data = MB_I2, aes(x=Var, y=Total)) +
+  geom_bar(stat="identity", fill="black") +
+  theme_minimal()
+p7<-p + scale_x_discrete(limits=c("Ag","AgP","For","ForC","Mdw","MdwI","Hyd","HydE","LaD","LaC","FlwR"))
+
+
+grid.arrange(p5, p6, p7, nrow = 3)
+```
+
+
+# Change
+
+```{r}
+# RelChangeInd<-(stancran$sPPind-stancran$sMBind)/stancran$sMBind
+# stancran$sRelChangeInd<-scale(RelChangeInd)[,1]
+
+
+FS_CI<-hier.part(stancran$sRelChangeInd, data.frame(Exp), gof="Rsqu")
+FS_IC2<-cbind(FS_C$IJ,c("Ag","AgP","For","ForC","Mdw","MdwI","Hyd","HydE","LaD","LaC","FlwR"))
+names(FS_C2)<-c("Ind","Joint","Total","Var")
+
+p<-ggplot(data = FS_C2, aes(x=Var, y=Total)) +
+  geom_bar(stat="identity", fill="black") +
+  theme_minimal()
+p8<-p + scale_x_discrete(limits=c("Ag","AgP","For","ForC","Mdw","MdwI","Hyd","HydE","LaD","LaC","FlwR"))
+
+
+FS_CC<-hier.part(stancran2$sChangePPM, data.frame(Exp2), gof="Rsqu")
+FS_CC2<-cbind(FS_CC$IJ,c("Ag","AgP","For","ForC","Mdw","MdwI","Hyd","HydE","LaD","LaC","FlwR"))
+names(FS_CC2)<-c("Ind","Joint","Total","Var")
+
+p<-ggplot(data = FS_CC2, aes(x=Var, y=Total)) +
+  geom_bar(stat="identity", fill="black") +
+  theme_minimal()
+p9<-p + scale_x_discrete(limits=c("Ag","AgP","For","ForC","Mdw","MdwI","Hyd","HydE","LaD","LaC","FlwR"))
+
+
+
+FS_CD<-hier.part(stancran2$sChangeDet, data.frame(Exp2), gof="Rsqu")
+FS_CD2<-cbind(FS_CD$IJ,c("Ag","AgP","For","ForC","Mdw","MdwI","Hyd","HydE","LaD","LaC","FlwR"))
+names(FS_CD2)<-c("Ind","Joint","Total","Var")
+
+p<-ggplot(data = FS_CD2, aes(x=Var, y=Total)) +
+  geom_bar(stat="identity", fill="black") +
+  theme_minimal()
+p10<-p + scale_x_discrete(limits=c("Ag","AgP","For","ForC","Mdw","MdwI","Hyd","HydE","LaD","LaC","FlwR"))
+
+
+grid.arrange(p8, p9, p10, nrow = 3)
 ```
 
 ## Check top models for multicollinearity and spatial autocorrelation
