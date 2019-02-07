@@ -332,7 +332,7 @@ lstwx  <- nb2listw(knn2nb(knearneigh(spdatx, k = 10)))
 lstw2  <- nb2listw(knn2nb(knearneigh(spdat2, k = 8)))
 ```
 
-## Create models
+## Top models
 
 ```{r}
 mod1<-lm(PPind~sFor_Prop+sHyd_TE+slgFlwR, na.action= "na.fail", data = stancran)
