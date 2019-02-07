@@ -25,10 +25,15 @@ We suggest maintaining forest in the surrounding landscape to promote local bumb
 #Keywords
 Bombus, resource pulse, mass-flowering, floral resources, landscape genetics, microsatellites
 
-## Cranberry landscape summary 
+## Cranberry data summary 
 
 ```{r}
-read.csv()
+CranData<-read.csv("CranBeeData.csv")
+
+stancran<-read.csv("stancran.csv")
+stancran2<-read.csv("stancran2.csv")
+
+summary(CranData)
 ```
 
 ## Bumble bee colony density calculations using genetic mark recapture
